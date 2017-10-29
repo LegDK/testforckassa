@@ -1,8 +1,6 @@
 package com.test.org.testforckassa.models;
 
-/**
- * Created by root on 29.10.2017.
- */
+
 
 public class ListItem {
     private String head;

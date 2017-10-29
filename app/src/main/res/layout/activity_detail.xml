@@ -6,14 +6,25 @@
     android:orientation="vertical"
     >
     <EditText
-        android:id="@+id/HeadID"
+        android:id="@+id/editHead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Название заметки"/>
     <EditText
+        android:id="@+id/editDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Содержание заметки"/>
-
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Сохранить"
+        />
+    <Button
+        android:id="@+id/buttonDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Удалить"/>
 </LinearLayout>
 
