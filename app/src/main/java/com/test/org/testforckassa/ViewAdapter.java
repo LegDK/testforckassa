@@ -20,7 +20,6 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
 
     private List<ListItem> listItems;
     private Context context;
-    private String id;
     private RecyclerView.Adapter adapter;
     public ViewAdapter(List<ListItem> listItems, Context context) {
         this.listItems = listItems;

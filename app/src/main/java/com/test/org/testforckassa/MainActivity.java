@@ -1,8 +1,10 @@
 package com.test.org.testforckassa;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -17,11 +19,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private DBHelp dbHelp;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<ListItem> listItems;
     private LinearLayoutManager linearLayoutManager;
+    private DBHelp dbHelp;
+    private SQLiteDatabase sqLiteDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +37,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new ViewAdapter(listItems,getApplicationContext());
         recyclerView.setAdapter(adapter);
-        ListItem item = new ListItem("Head","Description","ID");
-        listItems.add(item);
-        adapter.notifyDataSetChanged();
+
+
+
+        //ListItem item = new ListItem("Head","Description");
+
+
 
     }
     @Override
@@ -56,5 +62,19 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+
+    }
+    public void SQLToList(){
+        dbHelp = new DBHelp(getApplicationContext());
+        sqLiteDatabase=dbHelp.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.query("lists", null, null, null, null, null, null);
+        if (cursor.moveToFirst()){
+            ListItem item = new ListItem(cursor.getString(cursor.getColumnIndex("head")),cursor.getString(cursor.getColumnIndex("description")));
+            listItems.add(item);
+            adapter.notifyDataSetChanged();
+        }
+        else{
+            cursor.close();
+        }
     }
 }

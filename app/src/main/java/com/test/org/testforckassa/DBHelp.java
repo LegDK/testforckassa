@@ -14,7 +14,7 @@ public class DBHelp extends SQLiteOpenHelper {
    public static final String DATABASE_NAME = "listDB";
    public static final String TABLE_LIST = "lists";
    public static final String KEY_ID = "_id";
-   public static final String KEY_NAME = "name";
+   public static final String KEY_NAME = "head";
    public static final String KEY_DESCRIPTION = "description";
     public DBHelp(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -22,8 +22,8 @@ public class DBHelp extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table" + TABLE_LIST + "(" + KEY_ID + " integer primary key," + KEY_NAME +
-        " text, " + KEY_DESCRIPTION + " text)" );
+        sqLiteDatabase.execSQL("create table " + TABLE_LIST + " (" + KEY_ID + " integer primary key autoincrement, " + KEY_NAME +
+        " text, " + KEY_DESCRIPTION + " text);" );
     }
 
     @Override
