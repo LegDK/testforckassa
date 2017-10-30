@@ -64,9 +64,9 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
 
                     Intent intent = new Intent(context, ActivityDetail.class);
                     //intent.putExtra("Id",listItems.get(getAdapterPosition()).getId());
-                    intent.putExtra("Head",listItems.get(getAdapterPosition()).getHead());
-                    intent.putExtra("Description",listItems.get(getAdapterPosition()).getDescription());
-
+//                    intent.putExtra("Head",listItems.get(getAdapterPosition()).getHead());
+//                    intent.putExtra("Description",listItems.get(getAdapterPosition()).getDescription());
+                    intent.putExtra("Access","Read");
                     context.startActivity(intent);
                 }
             });
@@ -82,9 +82,9 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
                                 case R.id.itemChange:
                                     Intent intent = new Intent(context, ActivityDetail.class);
                                     //intent.putExtra("Id",listItems.get(getAdapterPosition()).getId());
-                                    intent.putExtra("Head",listItems.get(getAdapterPosition()).getHead());
-                                    intent.putExtra("Description",listItems.get(getAdapterPosition()).getDescription());
-
+//                                    intent.putExtra("Head",listItems.get(getAdapterPosition()).getHead());
+//                                    intent.putExtra("Description",listItems.get(getAdapterPosition()).getDescription());
+                                    intent.putExtra("Access","Read");
                                     context.startActivity(intent);
                                     break;
                                 case R.id.itemDelete:

@@ -33,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new ViewAdapter(listItems,getApplicationContext());
+        recyclerView.setAdapter(adapter);
+        ListItem item = new ListItem("Head","Description","ID");
+        listItems.add(item);
+        adapter.notifyDataSetChanged();
 
     }
     @Override
@@ -48,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
         if (item.getItemId()==R.id.icon_plus){
             Intent intent = new Intent(this,ActivityDetail.class);
-            intent.putExtra("Access","Read");
+            intent.putExtra("Access","Write");
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

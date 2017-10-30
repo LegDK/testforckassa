@@ -25,7 +25,7 @@ public class ActivityDetail extends AppCompatActivity {
         switch (access){
             case "Read":
                 editTextHead.setInputType(InputType.TYPE_NULL);
-                editTextDescription.setInputType(InputType.TYPE_CLASS_TEXT);
+                editTextDescription.setInputType(InputType.TYPE_NULL);
                 break;
             case "Write":
                 editTextHead.setInputType(InputType.TYPE_CLASS_TEXT);
