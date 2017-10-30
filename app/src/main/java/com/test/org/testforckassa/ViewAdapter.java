@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.test.org.testforckassa.models.ListItem;
@@ -72,20 +73,20 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
             });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public boolean onLongClick(View view) {
-                    PopupMenu popupMenu = new PopupMenu(context, view);
+                public boolean onLongClick(final View view) {
+                    PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
                     popupMenu.getMenuInflater().inflate(R.menu.menu_context,popupMenu.getMenu());
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()){
                                 case R.id.itemChange:
-                                    Intent intent = new Intent(context, ActivityDetail.class);
+                                    Intent intent = new Intent(view.getContext(), ActivityDetail.class);
                                     //intent.putExtra("Id",listItems.get(getAdapterPosition()).getId());
 //                                    intent.putExtra("Head",listItems.get(getAdapterPosition()).getHead());
 //                                    intent.putExtra("Description",listItems.get(getAdapterPosition()).getDescription());
-                                    intent.putExtra("Access","Read");
-                                    context.startActivity(intent);
+                                    intent.putExtra("Access","Write");
+                                    view.getContext().startActivity(intent);
                                     break;
                                 case R.id.itemDelete:
                                     listItems.remove(listItems.get(getAdapterPosition()));
@@ -95,6 +96,7 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
                             return true;
                         }
                     });
+                    popupMenu.show();
                     return true;
                 }
             });
