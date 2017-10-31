@@ -31,16 +31,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         dbHelp=new DBHelp(this);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        listItems = new ArrayList<>();
+        listItems = new ArrayList<ListItem>();
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
+        listItems = dbHelp.getDataFromDB();
         adapter = new ViewAdapter(listItems,getApplicationContext());
         recyclerView.setAdapter(adapter);
-        listItems = dbHelp.getDataFromDB();
 
-
-        //ListItem item = new ListItem("Head","Description");
 
 
 
