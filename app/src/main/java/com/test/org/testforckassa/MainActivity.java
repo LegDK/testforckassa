@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new ViewAdapter(listItems,getApplicationContext());
         recyclerView.setAdapter(adapter);
-
+        //listItems = dbHelp.getDataFromDB();
 
 
         //ListItem item = new ListItem("Head","Description");
@@ -64,17 +64,5 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
-    public void SQLToList(){
-        dbHelp = new DBHelp(getApplicationContext());
-        sqLiteDatabase=dbHelp.getWritableDatabase();
-        Cursor cursor = sqLiteDatabase.query("lists", null, null, null, null, null, null);
-        if (cursor.moveToFirst()){
-            ListItem item = new ListItem(cursor.getString(cursor.getColumnIndex("head")),cursor.getString(cursor.getColumnIndex("description")));
-            listItems.add(item);
-            adapter.notifyDataSetChanged();
-        }
-        else{
-            cursor.close();
-        }
-    }
+
 }

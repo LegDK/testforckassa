@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class ActivityDetail extends AppCompatActivity implements View.OnClickListener {
     private EditText editTextHead;
@@ -37,7 +38,26 @@ public class ActivityDetail extends AppCompatActivity implements View.OnClickLis
                 editTextDescription.setInputType(InputType.TYPE_CLASS_TEXT);
                 break;
         }
-        buttonSave.setOnClickListener(this);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String head = editTextHead.getText().toString();
+                String description = editTextDescription.getText().toString();
+                if (head.equals("")||description.equals("")){
+                    Toast.makeText(getApplicationContext(),
+                            "Пожалуйста заполните все поля",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    dbHelp =new DBHelp(ActivityDetail.this);
+                    dbHelp.insertIntoDB(head,description);
+                }
+//                contentValues.put("head", head);
+//                contentValues.put("description", description);
+//                sqLiteDatabase.insert("lists",null,contentValues);
+
+            }
+        });
         buttonDelete.setOnClickListener(this);
 
 
@@ -45,15 +65,10 @@ public class ActivityDetail extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        ContentValues contentValues = new ContentValues();
-        String head = editTextHead.getText().toString();
-        String description = editTextDescription.getText().toString();
-        SQLiteDatabase sqLiteDatabase = dbHelp.getWritableDatabase();
+
         switch (view.getId()){
             case R.id.buttonSave:
-                contentValues.put("head", head);
-                contentValues.put("description", description);
-                sqLiteDatabase.insert("lists",null,contentValues);
+
                 break;
             case R.id.buttonDelete:
 
