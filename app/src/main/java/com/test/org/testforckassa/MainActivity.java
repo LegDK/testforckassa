@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new ViewAdapter(listItems,getApplicationContext());
         recyclerView.setAdapter(adapter);
-        //listItems = dbHelp.getDataFromDB();
+        listItems = dbHelp.getDataFromDB();
 
 
         //ListItem item = new ListItem("Head","Description");

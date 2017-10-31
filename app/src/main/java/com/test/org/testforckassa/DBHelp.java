@@ -19,13 +19,12 @@ import java.util.List;
 public class DBHelp extends SQLiteOpenHelper {
 
    public static final String TABLE_NAME = "notes";
-   public static final String KEY_ID = "_id";
    public static final String COLUMN_HEAD = "head";
    public static final String COLUMN_DESCRIPTION = "description";
    private static final String DATABASE_NAME="notesDB";
    private static final int DATABASE_VERSION = 1;
    private static final String CR_TABLE = "create table "+TABLE_NAME+
-           "(_id integer primary key autoincrement, head TEXT,description TEXT)";
+           "(head TEXT primary key,description TEXT)";
     Context context;
     public DBHelp(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -68,9 +67,9 @@ public class DBHelp extends SQLiteOpenHelper {
         return listItems;
     }
 
-    public void deleteARow(){     //хз как сработает
+    public void deleteARow(String head){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        sqLiteDatabase.delete(TABLE_NAME,"_id"+" ?", new String[]{KEY_ID});
+        sqLiteDatabase.delete(TABLE_NAME,"head"+" ?", new String[]{head});
     }
 
 }
