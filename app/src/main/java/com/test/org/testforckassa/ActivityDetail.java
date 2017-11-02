@@ -30,6 +30,7 @@ public class ActivityDetail extends AppCompatActivity {
         buttonDelete = (Button) findViewById(R.id.buttonDelete);
         final Intent intent = getIntent();
         final String action = intent.getStringExtra("Action");
+        final Integer Id =intent.getIntExtra("Id",0);
         switch (action){
             case "Read":
                 editTextHead.setInputType(InputType.TYPE_NULL);
@@ -74,13 +75,14 @@ public class ActivityDetail extends AppCompatActivity {
                             finish();
                             break;
                         case "Update":
+                            dbHelp = new DBHelp(ActivityDetail.this);
+                            dbHelp.updateARow(Id,head,description);
+                            finish();
                             break;
                     }
 
 //                    if (action=="Update"){
-//                        dbHelp = new DBHelp(ActivityDetail.this);
-//                        dbHelp.updateARow(Id,head,description);
-//                        finish();
+//
 //                    }
                 }
 
