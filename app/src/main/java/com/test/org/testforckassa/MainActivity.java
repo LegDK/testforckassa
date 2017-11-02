@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
         if (item.getItemId()==R.id.icon_plus){
             Intent intent = new Intent(this,ActivityDetail.class);
-            intent.putExtra("Access","Write");
+            intent.putExtra("Action","Insert");
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

@@ -27,15 +27,31 @@ public class ActivityDetail extends AppCompatActivity implements View.OnClickLis
         buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonDelete = (Button) findViewById(R.id.buttonDelete);
         Intent intent = getIntent();
-        String access = intent.getStringExtra("Access");
-        switch (access){
+        String action = intent.getStringExtra("Action");
+        switch (action){
             case "Read":
                 editTextHead.setInputType(InputType.TYPE_NULL);
                 editTextDescription.setInputType(InputType.TYPE_NULL);
+                editTextHead.setText(intent.getStringExtra("Head"));
+                editTextDescription.setText(intent.getStringExtra("Description"));
+                buttonSave.setEnabled(false);
+                buttonDelete.setEnabled(false);
                 break;
-            case "Write":
+            case "Insert":
                 editTextHead.setInputType(InputType.TYPE_CLASS_TEXT);
                 editTextDescription.setInputType(InputType.TYPE_CLASS_TEXT);
+                editTextHead.setText("");
+                editTextDescription.setText("");
+                buttonSave.setEnabled(true);
+                buttonDelete.setEnabled(true);
+                break;
+            case "Update":
+                editTextHead.setInputType(InputType.TYPE_CLASS_TEXT);
+                editTextDescription.setInputType(InputType.TYPE_CLASS_TEXT);
+                editTextHead.setText(intent.getStringExtra("Head"));
+                editTextDescription.setText(intent.getStringExtra("Description"));
+                buttonSave.setEnabled(true);
+                buttonDelete.setEnabled(true);
                 break;
         }
         buttonSave.setOnClickListener(new View.OnClickListener() {

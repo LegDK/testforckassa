@@ -62,9 +62,9 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
 
                     Intent intent = new Intent(context, ActivityDetail.class);
                     //intent.putExtra("Id",listItems.get(getAdapterPosition()).getId());
-//                    intent.putExtra("Head",listItems.get(getAdapterPosition()).getHead());
-//                    intent.putExtra("Description",listItems.get(getAdapterPosition()).getDescription());
-                    intent.putExtra("Access","Read");
+                    intent.putExtra("Head",listItems.get(getAdapterPosition()).getHead());
+                    intent.putExtra("Description",listItems.get(getAdapterPosition()).getDescription());
+                    intent.putExtra("Action","Read");
                     context.startActivity(intent);
                 }
             });
@@ -80,9 +80,9 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
                                 case R.id.itemChange:
                                     Intent intent = new Intent(view.getContext(), ActivityDetail.class);
                                     //intent.putExtra("Id",listItems.get(getAdapterPosition()).getId());
-//                                    intent.putExtra("Head",listItems.get(getAdapterPosition()).getHead());
-//                                    intent.putExtra("Description",listItems.get(getAdapterPosition()).getDescription());
-                                    intent.putExtra("Access","Write");
+                                    intent.putExtra("Head",listItems.get(getAdapterPosition()).getHead());
+                                    intent.putExtra("Description",listItems.get(getAdapterPosition()).getDescription());
+                                    intent.putExtra("Action","Update");
                                     view.getContext().startActivity(intent);
                                     break;
                                 case R.id.itemDelete:
