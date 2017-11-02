@@ -24,7 +24,7 @@ public class DBHelp extends SQLiteOpenHelper {
    private static final String DATABASE_NAME="notesDB";
    private static final int DATABASE_VERSION = 1;
    private static final String CR_TABLE = "create table "+TABLE_NAME+
-           "(head TEXT primary key,description TEXT)";
+           "(id integer primary key autoincrement, head TEXT ,description TEXT)";
     Context context;
     public DBHelp(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -58,7 +58,7 @@ public class DBHelp extends SQLiteOpenHelper {
         Cursor cursor = sqLiteDatabase.rawQuery(query,null);
         if (cursor.moveToFirst()){
             do{
-                ListItem listItem = new ListItem(cursor.getString(1),cursor.getString(2));
+                ListItem listItem = new ListItem(cursor.getInt(0),cursor.getString(1),cursor.getString(2));
                 listItems.add(listItem);
             }while (cursor.moveToNext());
         }
