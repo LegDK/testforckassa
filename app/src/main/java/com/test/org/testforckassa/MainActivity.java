@@ -36,11 +36,6 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         onCreateMainList();
-
-
-
-
-
     }
     @Override
     public boolean onCreateOptionsMenu (Menu menu)
@@ -59,12 +54,21 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        onCreateMainList();
     }
     public void onCreateMainList(){
         listItems = dbHelp.getDataFromDB();
         adapter = new ViewAdapter(listItems,getApplicationContext());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    public RecyclerView.Adapter getAdapter() {
+        return adapter;
     }
 }

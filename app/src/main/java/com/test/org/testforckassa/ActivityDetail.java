@@ -5,19 +5,21 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class ActivityDetail extends AppCompatActivity implements View.OnClickListener {
+public class ActivityDetail extends AppCompatActivity {
     private EditText editTextHead;
     private EditText editTextDescription;
     private Button buttonSave;
     private Button buttonDelete;
     private DBHelp dbHelp;
     private MainActivity mainActivity;
+    private RecyclerView.Adapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,29 +70,14 @@ public class ActivityDetail extends AppCompatActivity implements View.OnClickLis
                     dbHelp =new DBHelp(ActivityDetail.this);
                     dbHelp.insertIntoDB(head,description);
                     finish();
-//                    mainActivity.onCreateMainList();
                 }
-//                contentValues.put("head", head);
-//                contentValues.put("description", description);
-//                sqLiteDatabase.insert("lists",null,contentValues);
+
 
             }
         });
-        buttonDelete.setOnClickListener(this);
+
 
 
     }
 
-    @Override
-    public void onClick(View view) {
-
-        switch (view.getId()){
-            case R.id.buttonSave:
-
-                break;
-            case R.id.buttonDelete:
-
-                break;
-        }
-    }
 }
