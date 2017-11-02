@@ -51,6 +51,8 @@ public class ActivityDetail extends AppCompatActivity implements View.OnClickLis
                 {
                     dbHelp =new DBHelp(ActivityDetail.this);
                     dbHelp.insertIntoDB(head,description);
+                    finish();
+//                    mainActivity.onCreateMainList();
                 }
 //                contentValues.put("head", head);
 //                contentValues.put("description", description);

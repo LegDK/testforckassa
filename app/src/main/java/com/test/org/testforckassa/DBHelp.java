@@ -12,6 +12,7 @@ import com.test.org.testforckassa.models.ListItem;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by root on 28.10.2017.
  */
@@ -24,11 +25,13 @@ public class DBHelp extends SQLiteOpenHelper {
    private static final String DATABASE_NAME="notesDB";
    private static final int DATABASE_VERSION = 1;
    private static final String CR_TABLE = "create table "+TABLE_NAME+
-           "(id integer primary key autoincrement, head TEXT ,description TEXT)";
-    Context context;
+           "(_id integer primary key autoincrement, head TEXT ,description TEXT)";
+    private Context context;
+
     public DBHelp(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context=context;
+
     }
 
     @Override
@@ -67,9 +70,17 @@ public class DBHelp extends SQLiteOpenHelper {
         return listItems;
     }
 
-    public void deleteARow(String head){
+    public void deleteARow(Integer id){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        sqLiteDatabase.delete(TABLE_NAME,"head"+" ?", new String[]{head});
+        sqLiteDatabase.delete(TABLE_NAME,"id="+" ?", new String[]{String.valueOf(id)});
+        sqLiteDatabase.close();
+    }
+    public void updateARow(Integer id, String head, String description){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("head",head);
+        contentValues.put("description",description);
+        sqLiteDatabase.update(TABLE_NAME,contentValues,"_id"+id,null);
     }
 
 }

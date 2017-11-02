@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new ViewAdapter(listItems,getApplicationContext());
-        recyclerView.setAdapter(adapter);
+        onCreateMainList();
+
 
 
 
@@ -61,5 +61,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
-
+    public void onCreateMainList(){
+        listItems = dbHelp.getDataFromDB();
+        adapter = new ViewAdapter(listItems,getApplicationContext());
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
 }

@@ -20,11 +20,10 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
 
     private List<ListItem> listItems;
     private Context context;
-    private RecyclerView.Adapter adapter;
+
     public ViewAdapter(List<ListItem> listItems, Context context) {
         this.listItems = listItems;
         this.context = context;
-        this.adapter = adapter;
     }
 
     @Override
@@ -36,7 +35,7 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         ListItem listItem = listItems.get(position);
-        holder.textViewHead.setText(listItem.getHead());
+        holder.textViewHead.setText(listItem.getHead()+listItem.getId());
         holder.textViewDescription.setText(listItem.getDescription());
 
     }
@@ -47,7 +46,6 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private Context context;
         public TextView textViewHead;
         public TextView textViewDescription;
 
@@ -89,7 +87,7 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
                                     break;
                                 case R.id.itemDelete:
                                     listItems.remove(listItems.get(getAdapterPosition()));
-                                    adapter.notifyDataSetChanged();
+
 
                             }
                             return true;
