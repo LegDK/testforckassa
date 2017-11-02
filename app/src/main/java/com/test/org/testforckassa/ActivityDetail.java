@@ -72,11 +72,13 @@ public class ActivityDetail extends AppCompatActivity {
                         case "Insert":
                             dbHelp = new DBHelp(ActivityDetail.this);
                             dbHelp.insertIntoDB(head, description);
+                            dbHelp.close();
                             finish();
                             break;
                         case "Update":
                             dbHelp = new DBHelp(ActivityDetail.this);
                             dbHelp.updateARow(Id,head,description);
+                            dbHelp.close();
                             finish();
                             break;
                     }
@@ -87,6 +89,15 @@ public class ActivityDetail extends AppCompatActivity {
                 }
 
 
+            }
+        });
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dbHelp = new DBHelp(ActivityDetail.this);
+                dbHelp.deleteARow(Id);
+                dbHelp.close();
+                finish();
             }
         });
 
