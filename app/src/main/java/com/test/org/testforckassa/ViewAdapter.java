@@ -79,7 +79,7 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
                             switch (item.getItemId()){
                                 case R.id.itemChange:
                                     Intent intent = new Intent(view.getContext(), ActivityDetail.class);
-                                    //intent.putExtra("Id",listItems.get(getAdapterPosition()).getId());
+                                    intent.putExtra("Id",listItems.get(getAdapterPosition()).getId());
                                     intent.putExtra("Head",listItems.get(getAdapterPosition()).getHead());
                                     intent.putExtra("Description",listItems.get(getAdapterPosition()).getDescription());
                                     intent.putExtra("Action","Update");

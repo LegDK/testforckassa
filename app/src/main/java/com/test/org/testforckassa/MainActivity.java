@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
         onCreateMainList();
     }
     public void onCreateMainList(){

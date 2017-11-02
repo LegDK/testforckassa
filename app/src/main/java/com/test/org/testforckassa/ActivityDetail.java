@@ -28,8 +28,8 @@ public class ActivityDetail extends AppCompatActivity {
         editTextDescription = (EditText) findViewById(R.id.editDescription);
         buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonDelete = (Button) findViewById(R.id.buttonDelete);
-        Intent intent = getIntent();
-        String action = intent.getStringExtra("Action");
+        final Intent intent = getIntent();
+        final String action = intent.getStringExtra("Action");
         switch (action){
             case "Read":
                 editTextHead.setInputType(InputType.TYPE_NULL);
@@ -67,9 +67,21 @@ public class ActivityDetail extends AppCompatActivity {
                 }
                 else
                 {
-                    dbHelp =new DBHelp(ActivityDetail.this);
-                    dbHelp.insertIntoDB(head,description);
-                    finish();
+                    switch (action){
+                        case "Insert":
+                            dbHelp = new DBHelp(ActivityDetail.this);
+                            dbHelp.insertIntoDB(head, description);
+                            finish();
+                            break;
+                        case "Update":
+                            break;
+                    }
+
+//                    if (action=="Update"){
+//                        dbHelp = new DBHelp(ActivityDetail.this);
+//                        dbHelp.updateARow(Id,head,description);
+//                        finish();
+//                    }
                 }
 
 
