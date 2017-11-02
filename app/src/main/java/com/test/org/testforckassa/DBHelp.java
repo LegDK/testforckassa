@@ -25,8 +25,9 @@ public class DBHelp extends SQLiteOpenHelper {
    private static final String DATABASE_NAME="notesDB";
    private static final int DATABASE_VERSION = 1;
    private static final String CR_TABLE = "create table "+TABLE_NAME+
-           "(_id integer primary key autoincrement, head TEXT ,description TEXT)";
+           "(id integer primary key autoincrement, head TEXT ,description TEXT)";
     private Context context;
+    private MainActivity mainActivity;
 
     public DBHelp(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -72,7 +73,8 @@ public class DBHelp extends SQLiteOpenHelper {
 
     public void deleteARow(Integer id){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        sqLiteDatabase.delete(TABLE_NAME,"id="+" ?", new String[]{String.valueOf(id)});
+        id = id +1;
+        sqLiteDatabase.delete(TABLE_NAME,"id = "+id, null);
         sqLiteDatabase.close();
     }
     public void updateARow(Integer id, String head, String description){
@@ -80,7 +82,7 @@ public class DBHelp extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put("head",head);
         contentValues.put("description",description);
-        sqLiteDatabase.update(TABLE_NAME,contentValues,"_id"+id,null);
+        sqLiteDatabase.update(TABLE_NAME,contentValues,"id = "+id, null);
     }
 
 }

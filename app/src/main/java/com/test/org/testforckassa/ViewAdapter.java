@@ -86,7 +86,12 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
                                     view.getContext().startActivity(intent);
                                     break;
                                 case R.id.itemDelete:
-                                    listItems.remove(listItems.get(getAdapterPosition()));
+                                    DBHelp dbHelp = new DBHelp(context);
+                                    dbHelp.deleteARow(getAdapterPosition());
+                                    dbHelp.close();
+                                    listItems.remove(getAdapterPosition());
+                                    notifyItemRemoved(getAdapterPosition());
+                                    notifyItemRangeChanged(getAdapterPosition(),listItems.size());
 
 
                             }
