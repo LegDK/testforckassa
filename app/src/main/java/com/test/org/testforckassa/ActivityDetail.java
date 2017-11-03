@@ -7,9 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Scroller;
 import android.widget.Toast;
 
 public class ActivityDetail extends AppCompatActivity {
@@ -26,6 +29,7 @@ public class ActivityDetail extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         editTextHead = (EditText) findViewById(R.id.editHead);
         editTextDescription = (EditText) findViewById(R.id.editDescription);
+        
         buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonDelete = (Button) findViewById(R.id.buttonDelete);
         final Intent intent = getIntent();
@@ -33,24 +37,20 @@ public class ActivityDetail extends AppCompatActivity {
         final Integer Id =intent.getIntExtra("Id",0);
         switch (action){
             case "Read":
-                editTextHead.setInputType(InputType.TYPE_NULL);
-                editTextDescription.setInputType(InputType.TYPE_NULL);
+                editTextHead.setRawInputType(0);
+                editTextDescription.setRawInputType(0);
                 editTextHead.setText(intent.getStringExtra("Head"));
                 editTextDescription.setText(intent.getStringExtra("Description"));
                 buttonSave.setEnabled(false);
                 buttonDelete.setEnabled(false);
                 break;
             case "Insert":
-                editTextHead.setInputType(InputType.TYPE_CLASS_TEXT);
-                editTextDescription.setInputType(InputType.TYPE_CLASS_TEXT);
                 editTextHead.setText("");
                 editTextDescription.setText("");
                 buttonSave.setEnabled(true);
                 buttonDelete.setEnabled(true);
                 break;
             case "Update":
-                editTextHead.setInputType(InputType.TYPE_CLASS_TEXT);
-                editTextDescription.setInputType(InputType.TYPE_CLASS_TEXT);
                 editTextHead.setText(intent.getStringExtra("Head"));
                 editTextDescription.setText(intent.getStringExtra("Description"));
                 buttonSave.setEnabled(true);

@@ -9,12 +9,26 @@
         android:id="@+id/editHead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Название заметки"/>
+        android:inputType="textMultiLine"
+        android:gravity="top"
+        android:minLines="3"
+        android:maxLines="10"
+        android:hint="@string/head"
+        android:singleLine="false"
+        />
+
     <EditText
         android:id="@+id/editDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Содержание заметки"/>
+        android:inputType="textMultiLine"
+        android:minLines="3"
+        android:maxLines="10"
+        android:gravity="top"
+        android:hint="@string/description"
+        android:singleLine="false"
+         />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -22,13 +36,13 @@
             android:id="@+id/buttonSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Сохранить"
+            android:text="@string/save"
             />
         <Button
             android:id="@+id/buttonDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Удалить"/>
+            android:text="@string/delete"/>
     </LinearLayout>
 
 </LinearLayout>

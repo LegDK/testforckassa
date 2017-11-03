@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Заметки</string>
+    <string name="head">Название заметки</string>
+    <string name="description">Содержание заметки</string>
+    <string name="save">Сохранить</string>
+    <string name="delete">Удалить</string>
 </resources>
