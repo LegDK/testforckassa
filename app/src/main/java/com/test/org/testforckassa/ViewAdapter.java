@@ -2,6 +2,7 @@ package com.test.org.testforckassa;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,7 +42,6 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
     public int getItemCount() {
         return listItems.size();
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView textViewHead;
         public TextView textViewDescription;
