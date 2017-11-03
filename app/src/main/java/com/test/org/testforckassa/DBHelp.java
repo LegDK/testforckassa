@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import com.test.org.testforckassa.models.ListItem;
 
@@ -27,7 +26,6 @@ public class DBHelp extends SQLiteOpenHelper {
    private static final String CR_TABLE = "create table "+TABLE_NAME+
            "(_id integer primary key autoincrement, head TEXT ,description TEXT)";
     private Context context;
-    private MainActivity mainActivity;
 
     public DBHelp(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -53,7 +51,6 @@ public class DBHelp extends SQLiteOpenHelper {
         contentValues.put("description",description);
         sqLiteDatabase.insert("notes",null,contentValues);
         sqLiteDatabase.close();
-        Toast.makeText(context,"insert successful",Toast.LENGTH_SHORT).show();
     }
     public List<ListItem> getDataFromDB(){
         List<ListItem> listItems = new ArrayList<ListItem>();

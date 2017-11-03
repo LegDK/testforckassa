@@ -1,18 +1,11 @@
 package com.test.org.testforckassa;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Scroller;
 import android.widget.Toast;
 
 public class ActivityDetail extends AppCompatActivity {
@@ -21,8 +14,6 @@ public class ActivityDetail extends AppCompatActivity {
     private Button buttonSave;
     private Button buttonDelete;
     private DBHelp dbHelp;
-    private MainActivity mainActivity;
-    private RecyclerView.Adapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,20 +32,16 @@ public class ActivityDetail extends AppCompatActivity {
                 editTextDescription.setRawInputType(0);
                 editTextHead.setText(intent.getStringExtra("Head"));
                 editTextDescription.setText(intent.getStringExtra("Description"));
-                buttonSave.setEnabled(false);
-                buttonDelete.setEnabled(false);
+                buttonSave.setVisibility(View.GONE);
+                buttonDelete.setVisibility(View.GONE);
                 break;
             case "Insert":
                 editTextHead.setText("");
                 editTextDescription.setText("");
-                buttonSave.setEnabled(true);
-                buttonDelete.setEnabled(true);
                 break;
             case "Update":
                 editTextHead.setText(intent.getStringExtra("Head"));
                 editTextDescription.setText(intent.getStringExtra("Description"));
-                buttonSave.setEnabled(true);
-                buttonDelete.setEnabled(true);
                 break;
         }
         buttonSave.setOnClickListener(new View.OnClickListener() {
@@ -82,10 +69,6 @@ public class ActivityDetail extends AppCompatActivity {
                             finish();
                             break;
                     }
-
-//                    if (action=="Update"){
-//
-//                    }
                 }
 
 
@@ -103,6 +86,12 @@ public class ActivityDetail extends AppCompatActivity {
 
 
 
+    }
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
 }

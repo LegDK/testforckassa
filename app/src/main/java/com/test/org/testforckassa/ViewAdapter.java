@@ -25,21 +25,18 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
         this.listItems = listItems;
         this.context = context;
     }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
         return new ViewHolder(v);
     }
-
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         ListItem listItem = listItems.get(position);
-        holder.textViewHead.setText(listItem.getHead()+listItem.getId());
+        holder.textViewHead.setText(listItem.getHead());
         holder.textViewDescription.setText(listItem.getDescription());
 
     }
-
     @Override
     public int getItemCount() {
         return listItems.size();
@@ -55,13 +52,11 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
             textViewHead = (TextView) itemView.findViewById(R.id.textViewHead);
             textViewDescription = (TextView) itemView.findViewById(R.id.textViewDesc);
             itemView.setOnClickListener(new View.OnClickListener(){
-
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
 
                     Intent intent = new Intent(context, ActivityDetail.class);
-                    //intent.putExtra("Id",listItems.get(getAdapterPosition()).getId());
                     intent.putExtra("Head",listItems.get(getAdapterPosition()).getHead());
                     intent.putExtra("Description",listItems.get(getAdapterPosition()).getDescription());
                     intent.putExtra("Action","Read");
@@ -92,8 +87,6 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
                                     listItems.remove(getAdapterPosition());
                                     notifyItemRemoved(getAdapterPosition());
                                     notifyItemRangeChanged(getAdapterPosition(),listItems.size());
-
-
                             }
                             return true;
                         }
@@ -103,6 +96,5 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
                 }
             });
         }
-
     }
 }
