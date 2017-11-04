@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,10 +26,14 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private DBHelp dbHelp;
     private SQLiteDatabase sqLiteDatabase;
+    public boolean isInDeleteMode = false;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         dbHelp=new DBHelp(this);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         listItems = new ArrayList<ListItem>();
@@ -41,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu (Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
 
@@ -62,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void onCreateMainList(){
         listItems = dbHelp.getDataFromDB();
-        adapter = new ViewAdapter(listItems,getApplicationContext());
+        adapter = new ViewAdapter(listItems,getApplicationContext(),MainActivity.this);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
