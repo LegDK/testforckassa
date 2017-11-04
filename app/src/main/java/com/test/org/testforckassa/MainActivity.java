@@ -1,6 +1,7 @@
 package com.test.org.testforckassa;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -53,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         super.onOptionsItemSelected(item);
@@ -72,10 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 listItems.remove(listItem);
             }
             dbHelp.close();
-            // бд прикрути и красавчик
             adapter.notifyDataSetChanged();
-
-
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_USER);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -83,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         onCreateMainList();
+        if (isInDeleteMode) {
+            massDeletePrepare();
+        }
     }
     public void onCreateMainList(){
         listItems = dbHelp.getDataFromDB();
@@ -103,6 +104,13 @@ public class MainActivity extends AppCompatActivity {
         else{
             selectionList.remove(listItems.get(position));
         }
+    }
+    public void massDeletePrepare(){
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.menu_delete);
+        isInDeleteMode = true;
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+        adapter.notifyDataSetChanged();
     }
 }
 

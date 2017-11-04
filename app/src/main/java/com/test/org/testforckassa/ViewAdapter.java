@@ -2,6 +2,7 @@ package com.test.org.testforckassa;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +15,6 @@ import android.widget.TextView;
 
 import com.test.org.testforckassa.models.ListItem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
@@ -39,8 +39,7 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
         holder.textViewDescription.setText(listItem.getDescription());
         if (!mainActivity.isInDeleteMode){
             holder.checkbox.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             holder.checkbox.setVisibility(View.VISIBLE);
             holder.checkbox.setChecked(false);
         }
@@ -71,7 +70,6 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
                 public void onClick(View v) {
                     if (!mainActivity.isInDeleteMode) {
                         Context context = v.getContext();
-
                         Intent intent = new Intent(context, ActivityDetail.class);
                         intent.putExtra("Head", listItems.get(getAdapterPosition()).getHead());
                         intent.putExtra("Description", listItems.get(getAdapterPosition()).getDescription());
@@ -83,47 +81,37 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(final View view) {
-                    PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
-                    popupMenu.getMenuInflater().inflate(R.menu.menu_context,popupMenu.getMenu());
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()){
-                                case R.id.itemChange:
-                                    Intent intent = new Intent(view.getContext(), ActivityDetail.class);
-                                    intent.putExtra("Id",listItems.get(getAdapterPosition()).getId());
-                                    intent.putExtra("Head",listItems.get(getAdapterPosition()).getHead());
-                                    intent.putExtra("Description",listItems.get(getAdapterPosition()).getDescription());
-                                    intent.putExtra("Action","Update");
-                                    view.getContext().startActivity(intent);
-                                    break;
-                                case R.id.itemDelete:
-                                    mainActivity.toolbar.getMenu().clear();
-                                    mainActivity.toolbar.inflateMenu(R.menu.menu_delete);
-                                    mainActivity.isInDeleteMode = true;
-                                    notifyDataSetChanged();
-//                                                                        DBHelp dbHelp = new DBHelp(context);
-//                                    dbHelp.deleteARow(listItems.get(getAdapterPosition()).getId());
-//                                    dbHelp.close();
-//                                    listItems.remove(getAdapterPosition());
-//                                    notifyItemRemoved(getAdapterPosition());
-//                                    notifyItemRangeChanged(getAdapterPosition(),listItems.size());
+                    if (!mainActivity.isInDeleteMode) {
+                        PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+                        popupMenu.getMenuInflater().inflate(R.menu.menu_context, popupMenu.getMenu());
+                        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.itemChange:
+                                        Intent intent = new Intent(view.getContext(), ActivityDetail.class);
+                                        intent.putExtra("Id", listItems.get(getAdapterPosition()).getId());
+                                        intent.putExtra("Head", listItems.get(getAdapterPosition()).getHead());
+                                        intent.putExtra("Description", listItems.get(getAdapterPosition()).getDescription());
+                                        intent.putExtra("Action", "Update");
+                                        view.getContext().startActivity(intent);
+                                        break;
+                                    case R.id.itemDelete:
+                                        mainActivity.massDeletePrepare();
+                                }
+                                return true;
                             }
-                            return true;
-                        }
-                    });
-                    popupMenu.show();
+                        });
+                        popupMenu.show();
+                    }
                     return true;
-                }
+
+                    }
+
             });
         }
     }
 
-    public void updateAdapter(ArrayList<ListItem> list){
 
-        for (ListItem listItem : list){
 
-        }
-
-    }
 }
