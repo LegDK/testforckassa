@@ -83,9 +83,6 @@ public class ActivityDetail extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
     }
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

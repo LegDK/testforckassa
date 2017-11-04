@@ -39,9 +39,9 @@ public class DBHelp extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-
         onCreate(sqLiteDatabase);
     }
+
     public void insertIntoDB(String head, String description){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -50,6 +50,7 @@ public class DBHelp extends SQLiteOpenHelper {
         sqLiteDatabase.insert("notes",null,contentValues);
         sqLiteDatabase.close();
     }
+
     public List<ListItem> getDataFromDB(){
         List<ListItem> listItems = new ArrayList<ListItem>();
         String query = "select * from " + TABLE_NAME;
@@ -71,6 +72,7 @@ public class DBHelp extends SQLiteOpenHelper {
         sqLiteDatabase.delete(TABLE_NAME,"_id="+id, null);
         sqLiteDatabase.close();
     }
+
     public void updateARow(Integer id, String head, String description){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();

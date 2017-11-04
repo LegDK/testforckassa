@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private List<ListItem> selectionList;
     private LinearLayoutManager linearLayoutManager;
     private DBHelp dbHelp;
-    private SQLiteDatabase sqLiteDatabase;
     public boolean isInDeleteMode = false;
     public Toolbar toolbar;
     @Override
