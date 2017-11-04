@@ -19,8 +19,6 @@ import java.util.List;
 public class DBHelp extends SQLiteOpenHelper {
 
    public static final String TABLE_NAME = "notes";
-   public static final String COLUMN_HEAD = "head";
-   public static final String COLUMN_DESCRIPTION = "description";
    private static final String DATABASE_NAME="notesDB";
    private static final int DATABASE_VERSION = 1;
    private static final String CR_TABLE = "create table "+TABLE_NAME+
@@ -80,5 +78,4 @@ public class DBHelp extends SQLiteOpenHelper {
         contentValues.put("description",description);
         sqLiteDatabase.update(TABLE_NAME,contentValues,"_id = "+id, null);
     }
-
 }
