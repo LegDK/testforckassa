@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.test.org.testforckassa.models.ListItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
@@ -58,17 +59,25 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
             textViewHead = (TextView) itemView.findViewById(R.id.textViewHead);
             textViewDescription = (TextView) itemView.findViewById(R.id.textViewDesc);
             checkbox = (CheckBox) itemView.findViewById(R.id.check_list_item);
+            checkbox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mainActivity.prepareSelections(view,getAdapterPosition());
+                }
+            });
             this.mainActivity = mainActivity;
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Context context = v.getContext();
+                    if (!mainActivity.isInDeleteMode) {
+                        Context context = v.getContext();
 
-                    Intent intent = new Intent(context, ActivityDetail.class);
-                    intent.putExtra("Head",listItems.get(getAdapterPosition()).getHead());
-                    intent.putExtra("Description",listItems.get(getAdapterPosition()).getDescription());
-                    intent.putExtra("Action","Read");
-                    context.startActivity(intent);
+                        Intent intent = new Intent(context, ActivityDetail.class);
+                        intent.putExtra("Head", listItems.get(getAdapterPosition()).getHead());
+                        intent.putExtra("Description", listItems.get(getAdapterPosition()).getDescription());
+                        intent.putExtra("Action", "Read");
+                        context.startActivity(intent);
+                    }
                 }
             });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -89,13 +98,16 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
                                     view.getContext().startActivity(intent);
                                     break;
                                 case R.id.itemDelete:
-                                    
-                                    DBHelp dbHelp = new DBHelp(context);
-                                    dbHelp.deleteARow(listItems.get(getAdapterPosition()).getId());
-                                    dbHelp.close();
-                                    listItems.remove(getAdapterPosition());
-                                    notifyItemRemoved(getAdapterPosition());
-                                    notifyItemRangeChanged(getAdapterPosition(),listItems.size());
+                                    mainActivity.toolbar.getMenu().clear();
+                                    mainActivity.toolbar.inflateMenu(R.menu.menu_delete);
+                                    mainActivity.isInDeleteMode = true;
+                                    notifyDataSetChanged();
+//                                                                        DBHelp dbHelp = new DBHelp(context);
+//                                    dbHelp.deleteARow(listItems.get(getAdapterPosition()).getId());
+//                                    dbHelp.close();
+//                                    listItems.remove(getAdapterPosition());
+//                                    notifyItemRemoved(getAdapterPosition());
+//                                    notifyItemRangeChanged(getAdapterPosition(),listItems.size());
                             }
                             return true;
                         }
@@ -105,5 +117,13 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
                 }
             });
         }
+    }
+
+    public void updateAdapter(ArrayList<ListItem> list){
+
+        for (ListItem listItem : list){
+
+        }
+
     }
 }

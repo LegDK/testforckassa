@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 import com.test.org.testforckassa.models.ListItem;
 
@@ -23,11 +24,12 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<ListItem> listItems;
+    private List<ListItem> selectionList;
     private LinearLayoutManager linearLayoutManager;
     private DBHelp dbHelp;
     private SQLiteDatabase sqLiteDatabase;
     public boolean isInDeleteMode = false;
-    private Toolbar toolbar;
+    public Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +39,12 @@ public class MainActivity extends AppCompatActivity {
         dbHelp=new DBHelp(this);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         listItems = new ArrayList<ListItem>();
+        selectionList = new ArrayList<ListItem>();
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         onCreateMainList();
+        dbHelp.close();
     }
     @Override
     public boolean onCreateOptionsMenu (Menu menu)
@@ -57,6 +61,21 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this,ActivityDetail.class);
             intent.putExtra("Action","Insert");
             startActivity(intent);
+        }
+        if (item.getItemId()==R.id.massItemDelete){
+            isInDeleteMode = false;
+            toolbar.getMenu().clear();
+            toolbar.inflateMenu(R.menu.menu_main);
+            dbHelp = new DBHelp(this);
+            for (ListItem listItem : selectionList){
+                dbHelp.deleteARow(listItem.getId());
+                listItems.remove(listItem);
+            }
+            dbHelp.close();
+            // бд прикрути и красавчик
+            adapter.notifyDataSetChanged();
+
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -77,4 +96,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }
+    public void prepareSelections(View view,int position){
+        if (((CheckBox)view).isChecked()){
+            selectionList.add(listItems.get(position));
+        }
+        else{
+            selectionList.remove(listItems.get(position));
+        }
+    }
 }
+
