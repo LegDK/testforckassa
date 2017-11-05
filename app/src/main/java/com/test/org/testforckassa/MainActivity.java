@@ -1,5 +1,6 @@
 package com.test.org.testforckassa;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
@@ -9,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,8 +46,41 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         onCreateMainList();
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(createHelperCallback());
+        itemTouchHelper.attachToRecyclerView(recyclerView);
         dbHelp.close();
     }
+
+    private ItemTouchHelper.Callback createHelperCallback() {
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
+                new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,0) {
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                        moveItem(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                        return true;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                        
+                    }
+                };
+                return simpleItemTouchCallback;
+    }
+
+    private void moveItem(int oldPosition, int newPosition) {
+        ListItem itemOld = (ListItem) listItems.get(oldPosition);
+        ListItem itemNew = (ListItem) listItems.get(newPosition);
+        dbHelp = new DBHelp(this);
+        dbHelp.getWritableDatabase();
+        dbHelp.updateARow(itemOld.getId(),itemNew.getHead(),itemNew.getDescription());
+        dbHelp.updateARow(itemNew.getId(),itemOld.getHead(),itemOld.getDescription());
+        listItems.remove(oldPosition);
+        listItems.add(newPosition,itemOld);
+        adapter.notifyItemMoved(oldPosition,newPosition);
+        dbHelp.close();
+    }
+
     @Override
     public boolean onCreateOptionsMenu (Menu menu)
     {
