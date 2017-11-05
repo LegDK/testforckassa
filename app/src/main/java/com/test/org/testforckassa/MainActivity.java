@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
         ListItem itemNew = (ListItem) listItems.get(newPosition);
         dbHelp = new DBHelp(this);
         dbHelp.getWritableDatabase();
-        dbHelp.updateARow(itemOld.getId(),itemNew.getHead(),itemNew.getDescription());
         dbHelp.updateARow(itemNew.getId(),itemOld.getHead(),itemOld.getDescription());
+        dbHelp.updateARow(itemOld.getId(),itemNew.getHead(),itemNew.getDescription());
         listItems.remove(oldPosition);
         listItems.add(newPosition,itemOld);
         adapter.notifyItemMoved(oldPosition,newPosition);

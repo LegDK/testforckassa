@@ -51,11 +51,13 @@ public class DBHelp extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
+
     public List<ListItem> getDataFromDB(){
         List<ListItem> listItems = new ArrayList<ListItem>();
         String query = "select * from " + TABLE_NAME;
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(query,null);
+
         if (cursor.moveToFirst()){
             do{
                 ListItem listItem = new ListItem(cursor.getInt(0),cursor.getString(1),cursor.getString(2));
