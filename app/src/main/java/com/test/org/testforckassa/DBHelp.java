@@ -81,5 +81,8 @@ public class DBHelp extends SQLiteOpenHelper {
         contentValues.put("head",head);
         contentValues.put("description",description);
         sqLiteDatabase.update(TABLE_NAME,contentValues,"_id = "+id, null);
+        sqLiteDatabase.close();
     }
+
+
 }

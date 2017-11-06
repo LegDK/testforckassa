@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private DBHelp dbHelp;
     public boolean isInDeleteMode = false;
     public Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(createHelperCallback());
         itemTouchHelper.attachToRecyclerView(recyclerView);
         dbHelp.close();
+
     }
 
     private ItemTouchHelper.Callback createHelperCallback() {
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                         moveItem(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+
                         return true;
                     }
 
@@ -64,20 +67,29 @@ public class MainActivity extends AppCompatActivity {
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                         
                     }
+
                 };
+
                 return simpleItemTouchCallback;
     }
 
-    private void moveItem(int oldPosition, int newPosition) {
+    private void moveItem(int oldPosition, int newPosition) { //старая позиция не меняется, а новая меняется и меняет все за собой
         ListItem itemOld = (ListItem) listItems.get(oldPosition);
+        System.out.println("Olditem="+itemOld+" OldPos="+oldPosition);
         ListItem itemNew = (ListItem) listItems.get(newPosition);
+        System.out.println("NewItem="+itemNew+" NewPos="+newPosition);
         dbHelp = new DBHelp(this);
         dbHelp.getWritableDatabase();
-       // dbHelp.updateARow(itemNew.getId(),itemOld.getHead(),itemOld.getDescription());
-        //dbHelp.updateARow(itemOld.getId(),itemNew.getHead(),itemNew.getDescription());
         listItems.remove(oldPosition);
         listItems.add(newPosition,itemOld);
         adapter.notifyItemMoved(oldPosition,newPosition);
+            if (newPosition-oldPosition!=0) {
+                dbHelp.updateARow(itemNew.getId(), itemOld.getHead(), itemOld.getDescription());
+                System.out.println("IdNew=" + itemNew.getId());
+                dbHelp.updateARow(itemOld.getId(), itemNew.getHead(), itemNew.getDescription());//косяки тут
+                System.out.println("IdOld=" + itemOld.getId());
+
+            }
         dbHelp.close();
     }
 
