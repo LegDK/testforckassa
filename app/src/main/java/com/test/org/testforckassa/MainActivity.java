@@ -75,22 +75,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void moveItem(int oldPosition, int newPosition) { //старая позиция не меняется, а новая меняется и меняет все за собой
         ListItem itemOld = (ListItem) listItems.get(oldPosition);
-        System.out.println("Olditem="+itemOld+" OldPos="+oldPosition);
-        ListItem itemNew = (ListItem) listItems.get(newPosition);
-        System.out.println("NewItem="+itemNew+" NewPos="+newPosition);
-        dbHelp = new DBHelp(this);
-        dbHelp.getWritableDatabase();
+//        System.out.println("Olditem="+itemOld+" OldPos="+oldPosition);
+//        ListItem itemNew = (ListItem) listItems.get(newPosition);
+//        System.out.println("NewItem="+itemNew+" NewPos="+newPosition);
+//        dbHelp = new DBHelp(this);
+//        dbHelp.getWritableDatabase();
         listItems.remove(oldPosition);
         listItems.add(newPosition,itemOld);
         adapter.notifyItemMoved(oldPosition,newPosition);
-            if (newPosition-oldPosition!=0) {
-                dbHelp.updateARow(itemNew.getId(), itemOld.getHead(), itemOld.getDescription());
-                System.out.println("IdNew=" + itemNew.getId());
-                dbHelp.updateARow(itemOld.getId(), itemNew.getHead(), itemNew.getDescription());//косяки тут
-                System.out.println("IdOld=" + itemOld.getId());
-
-            }
-        dbHelp.close();
+//            if (newPosition-oldPosition!=0) {
+//                dbHelp.updateARow(itemNew.getId(), itemOld.getHead(), itemOld.getDescription());
+//                System.out.println("IdNew=" + itemNew.getId());
+//                dbHelp.updateARow(itemOld.getId(), itemNew.getHead(), itemNew.getDescription());//косяки тут
+//                System.out.println("IdOld=" + itemOld.getId());
+//
+//            }
+//        dbHelp.close();
     }
 
     @Override

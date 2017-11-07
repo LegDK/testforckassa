@@ -35,7 +35,7 @@ public class ViewAdapter extends RecyclerView.Adapter<ViewAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         ListItem listItem = listItems.get(position);
-        holder.textViewHead.setText(listItem.getId()+listItem.getHead());
+        holder.textViewHead.setText(listItem.getHead());
         holder.textViewDescription.setText(listItem.getDescription());
         if (!mainActivity.isInDeleteMode){
             holder.checkbox.setVisibility(View.GONE);
