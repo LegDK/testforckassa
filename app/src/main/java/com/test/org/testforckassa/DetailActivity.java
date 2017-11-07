@@ -8,25 +8,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class ActivityDetail extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity {
     private EditText editTextHead;
     private EditText editTextDescription;
     private Button buttonSave;
     private Button buttonDelete;
     private DBHelp dbHelp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         editTextHead = (EditText) findViewById(R.id.editHead);
         editTextDescription = (EditText) findViewById(R.id.editDescription);
-        
+        dbHelp = new DBHelp(this);
         buttonSave = (Button) findViewById(R.id.buttonSave);
         buttonDelete = (Button) findViewById(R.id.buttonDelete);
         final Intent intent = getIntent();
         final String action = intent.getStringExtra("Action");
-        final Integer Id =intent.getIntExtra("Id",0);
-        switch (action){
+        final Integer Id = intent.getIntExtra("Id", 0);
+        switch (action) {
             case "Read":
                 editTextHead.setRawInputType(0);
                 editTextDescription.setRawInputType(0);
@@ -49,44 +50,36 @@ public class ActivityDetail extends AppCompatActivity {
             public void onClick(View view) {
                 String head = editTextHead.getText().toString();
                 String description = editTextDescription.getText().toString();
-                if (head.equals("")||description.equals("")){
+                if (head.equals("") || description.equals("")) {
                     Toast.makeText(getApplicationContext(),
-                            "Пожалуйста заполните все поля",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    switch (action){
+                            "Пожалуйста заполните все поля", Toast.LENGTH_SHORT).show();
+                } else {
+                    switch (action) {
                         case "Insert":
-                            dbHelp = new DBHelp(ActivityDetail.this);
                             dbHelp.insertIntoDB(head, description);
-                            dbHelp.close();
                             finish();
                             break;
                         case "Update":
-                            dbHelp = new DBHelp(ActivityDetail.this);
-                            dbHelp.updateARow(Id,head,description);
-                            dbHelp.close();
+                            dbHelp.updateARow(Id, head, description);
                             finish();
                             break;
                     }
                 }
-
-
             }
         });
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbHelp = new DBHelp(ActivityDetail.this);
                 dbHelp.deleteARow(Id);
-                dbHelp.close();
                 finish();
             }
         });
     }
+
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
+
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
     }

@@ -1,12 +1,9 @@
 package com.test.org.testforckassa;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +11,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.test.org.testforckassa.models.ListItem;
@@ -49,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
         onCreateMainList();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(createHelperCallback());
         itemTouchHelper.attachToRecyclerView(recyclerView);
-        dbHelp.close();
-
     }
 
     private ItemTouchHelper.Callback createHelperCallback() {
@@ -59,13 +53,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                         moveItem(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-
                         return true;
                     }
-
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                        
                     }
 
                 };
@@ -90,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
 //                System.out.println("IdOld=" + itemOld.getId());
 //
 //            }
-//        dbHelp.close();
     }
 
     @Override
@@ -104,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         super.onOptionsItemSelected(item);
         if (item.getItemId()==R.id.icon_plus){
-            Intent intent = new Intent(this,ActivityDetail.class);
+            Intent intent = new Intent(this,DetailActivity.class);
             intent.putExtra("Action","Insert");
             startActivity(intent);
         }
@@ -112,12 +102,10 @@ public class MainActivity extends AppCompatActivity {
             isInDeleteMode = false;
             toolbar.getMenu().clear();
             toolbar.inflateMenu(R.menu.menu_main);
-            dbHelp = new DBHelp(this);
             for (ListItem listItem : selectionList){
                 dbHelp.deleteARow(listItem.getId());
                 listItems.remove(listItem);
             }
-            dbHelp.close();
             adapter.notifyDataSetChanged();
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_USER);
         }

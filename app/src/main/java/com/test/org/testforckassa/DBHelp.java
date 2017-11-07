@@ -18,17 +18,14 @@ import java.util.List;
 
 public class DBHelp extends SQLiteOpenHelper {
 
-   public static final String TABLE_NAME = "notes";
-   private static final String DATABASE_NAME="notesDB";
-   private static final int DATABASE_VERSION = 1;
-   private static final String CR_TABLE = "create table "+TABLE_NAME+
-           "(_id integer primary key autoincrement, head TEXT ,description TEXT)";
-    private Context context;
+    public static final String TABLE_NAME = "notes";
+    private static final String DATABASE_NAME = "notesDB";
+    private static final int DATABASE_VERSION = 1;
+    private static final String CR_TABLE = "create table " + TABLE_NAME +
+            "(_id integer primary key autoincrement, head TEXT ,description TEXT)";
 
     public DBHelp(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.context=context;
-
     }
 
     @Override
@@ -42,45 +39,43 @@ public class DBHelp extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void insertIntoDB(String head, String description){
+    public void insertIntoDB(String head, String description) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("head",head);
-        contentValues.put("description",description);
-        sqLiteDatabase.insert("notes",null,contentValues);
+        contentValues.put("head", head);
+        contentValues.put("description", description);
+        sqLiteDatabase.insert("notes", null, contentValues);
         sqLiteDatabase.close();
     }
-
-
-    public List<ListItem> getDataFromDB(){
+    public List<ListItem> getDataFromDB() {
         List<ListItem> listItems = new ArrayList<ListItem>();
         String query = "select * from " + TABLE_NAME;
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery(query,null);
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
 
-        if (cursor.moveToFirst()){
-            do{
-                ListItem listItem = new ListItem(cursor.getInt(0),cursor.getString(1),cursor.getString(2));
+        if (cursor.moveToFirst()) {
+            do {
+                ListItem listItem = new ListItem(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
                 listItems.add(listItem);
-            }while (cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
         cursor.close();
         sqLiteDatabase.close();
         return listItems;
     }
 
-    public void deleteARow(Integer id){
+    public void deleteARow(Integer id) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        sqLiteDatabase.delete(TABLE_NAME,"_id="+id, null);
+        sqLiteDatabase.delete(TABLE_NAME, "_id=" + id, null);
         sqLiteDatabase.close();
     }
 
-    public void updateARow(Integer id, String head, String description){
+    public void updateARow(Integer id, String head, String description) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("head",head);
-        contentValues.put("description",description);
-        sqLiteDatabase.update(TABLE_NAME,contentValues,"_id = "+id, null);
+        contentValues.put("head", head);
+        contentValues.put("description", description);
+        sqLiteDatabase.update(TABLE_NAME, contentValues, "_id = " + id, null);
         sqLiteDatabase.close();
     }
 
